@@ -787,5 +787,32 @@ namespace RSG
             promise.Reject(ex);
             return promise;
         }
+
+        public static IPromise Sequence(IEnumerable<Func<IPromise<PromisedT>>> fns)
+        {
+            var promises = new List<Func<IPromise>>();
+            foreach (Func<IPromise<PromisedT>> fn in fns)
+            {
+                var fn1 = fn;
+                Func<IPromise> promise = () =>
+                {
+                    var p2 = new Promise();
+                    fn1()
+                    .Then(obj =>
+                    {
+                        p2.Resolve();
+
+                    })
+                    .Catch(ex =>
+                    {
+                        p2.Reject(ex);
+                    });
+
+                    return p2;
+                };
+                promises.Add(promise);
+            }
+            return Promise.Sequence(promises);
+        }
     }
 }
