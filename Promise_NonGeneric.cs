@@ -888,5 +888,10 @@ namespace RSG
 				unhandlerException(sender, new ExceptionEventArgs(ex));
             }
         }
+
+        public void Reject(string exceptionMessage)
+        {
+            Reject(new Exception(exceptionMessage));
+        }
     }
 }

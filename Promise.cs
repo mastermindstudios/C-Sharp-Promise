@@ -814,5 +814,10 @@ namespace RSG
             }
             return Promise.Sequence(promises);
         }
+
+        public void Reject(string exceptionMessage)
+        {
+           Reject(new Exception(exceptionMessage));
+        }
     }
 }
