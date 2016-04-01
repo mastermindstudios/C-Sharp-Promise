@@ -382,7 +382,10 @@ namespace RSG
             {
                 rejectHandlers.Each(handler => InvokeRejectHandler(handler.callback, handler.rejectable, ex));
             }
-
+            else
+            {
+                PropagateUnhandledException(this, ex);
+            }
             ClearHandlers();
         }
 
